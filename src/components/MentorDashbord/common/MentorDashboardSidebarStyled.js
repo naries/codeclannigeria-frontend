@@ -3,10 +3,11 @@ import styled from 'styled-components';
 const active = 'background: #004699;';
 const MentorDashboardSidebarStyled = styled.div`
   width: 10rem;
-  position: absolute;
+  position: fixed;
   top: 0;
   background: #0050af;
   display: flex;
+  min-height: 200%;
   color: #fff;
   flex-direction: column;
   /* padding: 1rem; */
@@ -14,7 +15,7 @@ const MentorDashboardSidebarStyled = styled.div`
 
   padding-bottom: 33.5rem;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 26px;
 
   display: flex;
@@ -39,9 +40,16 @@ const MentorDashboardSidebarStyled = styled.div`
     }
   }
 
+  .active-icon {
+    ${active}
+  }
+
   img {
     margin: 0 auto;
     padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .main-menu-link {
@@ -67,9 +75,9 @@ const MentorDashboardSidebarStyled = styled.div`
   }
 
   .logout__link {
-    position: absolute;
-    bottom: 6rem;
-    left: 1rem;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
   }
 
   .btn-primary {
@@ -81,9 +89,14 @@ const MentorDashboardSidebarStyled = styled.div`
   }
 
   @media (max-width: 820px) {
+    width: 12rem;
     transition: transform 0.3s ease-in-out;
     transform: ${({ showSidebar }) =>
       showSidebar ? 'translateX(0)' : 'translateX(-100%)'};
+
+    .logout__link {
+      left: 2.3rem;
+    }
   }
 `;
 

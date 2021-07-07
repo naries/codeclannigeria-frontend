@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SinglePendingTaskStyled from './SinglePendingTaskStyled';
 import { Link } from 'react-router-dom';
-import { formatTime } from '../../../utils';
+import { Button } from 'antd';
+import { GradingModal } from './GradingModal';
 
-function SinglePendingTask({ data, track }) {
+function SinglePendingTask({ data, track, completed }) {
   const { title, deadline, id } = data;
+  const [visible, setVisible] = useState();
+
+  const onCancel = () => {
+    setVisible(false);
+  };
   return (
     <SinglePendingTaskStyled>
       <div className="pending-task">
         <div className="task-box">
-          <div className="task-details">
+          <div className="task-details w-50">
             <Link
-              className="task-name"
+              className="task-name font-weight-bold"
               to={{
                 pathname: `/dashboard/pending-task/${id}`,
                 query: { data },
@@ -21,9 +27,13 @@ function SinglePendingTask({ data, track }) {
             </Link>
             <p className="task-track">{track}</p>
           </div>
-          <div className="task-deadline">
+          <div className="task-deadline ">
             <p>Deadline: {new Date(deadline).toUTCString()}</p>
+            {completed ? (
+              <Button onClick={() => setVisible(true)}>Grading</Button>
+            ) : null}
           </div>
+          <GradingModal visible={visible} taskId={id} onCancel={onCancel} />
         </div>
       </div>
     </SinglePendingTaskStyled>

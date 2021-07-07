@@ -4,13 +4,12 @@ import Ellipse from '../assets/image/dashboard/Ellipse.png';
 
 import './WelcomeAlert.css';
 import { DashboardStyled } from '../MenteeDashboard/MenteeDashboardStyled';
+import { Spin } from 'antd';
 // import { Skeleton } from 'antd';
 
 function WelcomeAlert({ user, enroll, visible, loading }) {
   const [showMessage, setShowMessage] = useState(true);
   const { firstName, lastName, tracks } = user;
-
-  console.log({ user });
 
   return (
     <DashboardStyled>
@@ -31,42 +30,56 @@ function WelcomeAlert({ user, enroll, visible, loading }) {
             <div className="user__welcome col-lg-8 col-md-8 col-sm-8">
               <p className="user__name">
                 Hi,
-                {!loading
-                  ? ` ${firstName} ${lastName}`
-                  : // <Skeleton.Button
-                    //   active
-                    //   size="small"
-                    //   // style={{ display: 'inline' }}
-                    // />
-                    null}
+                {!loading && (lastName || firstName) ? (
+                  ` ${firstName} ${lastName}`
+                ) : (
+                  <Spin />
+                )}
               </p>
-              <p>
-                Welcome to CodeClan Nigeria, Our goal is to turn 500+ people
-                into developers every 3 months. To achieve this, we are creating
-                clans in each of Nigeria city.
+              <p style={{ fontSize: '0.9rem' }}>
+                You are adviced to send an email or a WhatsApp message to your
+                mentor requesting to be added to your respective track channel
+                on Slack. You can see your mentor information on the portal when
+                you click on the mentor Tab.{' '}
+              </p>
+              <p style={{ fontSize: '0.9rem' }}>
+                It's important you do this so we don't drop you from the
+                program. We have started to take measures on dropping inactive
+                accounts to free up some space on our server. We are trying as
+                much as possible to spend so little on server cost.
               </p>
               <small>
-                *Start your journey with CodeClan by enrolling in a track
+                *Start your journey with CodeClan by enrolling in a track and
+                joining the Slack channel
               </small>
             </div>
 
-            {tracks && tracks.length >= 1 ? (
-              <span
-                id="close__user__info"
-                onClick={() => setShowMessage(false)}
+            <div className="d-flex w-100 justify-content-end mr-3">
+              <a
+                className="btn slack__btn btn-primary mr-2"
+                href="https://communityinviter.com/apps/codeclannigeria/codeclannigeria"
               >
-                x
-              </span>
-            ) : (
-              <div className="get__started col-lg-4 col-md-4 col-sm-8 d-flex align-items-end">
-                <button
-                  className="btn btn-block btn-primary mr-5"
-                  onClick={() => enroll()}
+                Join our Slack Channel
+              </a>
+
+              {tracks && tracks.length >= 1 ? (
+                <span
+                  id="close__user__info"
+                  onClick={() => setShowMessage(false)}
                 >
-                  Enroll Now
-                </button>
-              </div>
-            )}
+                  x
+                </span>
+              ) : (
+                <div className="get__started">
+                  <button
+                    className="btn btn-small btn-warning"
+                    onClick={() => enroll()}
+                  >
+                    Enroll Now
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </CSSTransition>
